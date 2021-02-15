@@ -18,7 +18,7 @@ namespace ConsoleUI
         private static void SoldGameOperatons()
         {
             SoldGameManager soldGameManager = new SoldGameManager(new EfSoldGameDal());
-            soldGameManager.Add(new SoldGame { GameName = "PUBG", GamerName = "Can Cuma", GamerLastName = "Yaman", GamerIdentityNumber = "11683333333", CampaignName = "Teacher", CampaignEndDate=new DateTime(2022,04,04), SoldDate = new DateTime(2021, 02, 06) });
+            soldGameManager.Add(new SoldGame { GameName = "PUBG", GamerName = "Can Cuma", GamerLastName = "YAMAN", GamerIdentityNumber = "11683333333", CampaignName = "Teacher", CampaignEndDate=new DateTime(2022,04,04), SoldDate = new DateTime(2021, 02, 06) });
         }
 
         private static void CampaignOperations()
