@@ -35,6 +35,11 @@ namespace Business.Concrete
             Console.WriteLine(soldGame.GameName+" sold to "+ soldGame.GamerName+" "+soldGame.GamerLastName+" has been deleted");
         }
 
+        public List<SoldGame> GetAll()
+        {
+            return _soldGameDal.GetAll();
+        }
+
         public void Update(SoldGame soldGame)
         {
             _soldGameDal.Update(soldGame);

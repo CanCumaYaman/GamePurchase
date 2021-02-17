@@ -26,6 +26,11 @@ namespace Business.Concrete
             Console.WriteLine(game.Name + " deleted successfully");
         }
 
+        public List<Game> GetAll()
+        {
+            return _gameDal.GetAll();
+        }
+
         public void SellGame(Game game, Gamer gamer, Campaign campaign)
         {
             _gameDal.SellGame(game, gamer, campaign);

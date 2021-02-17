@@ -37,6 +37,14 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        public List<TEntity> GetAll()
+        {
+            using (TContext context = new TContext())
+            {
+                return context.Set<TEntity>().ToList();
+            }
+        }
+
         public void Update(TEntity entity)
         {
             using(TContext context=new TContext())

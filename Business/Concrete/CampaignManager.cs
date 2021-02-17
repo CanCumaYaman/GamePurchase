@@ -26,6 +26,11 @@ namespace Business.Concrete
             Console.WriteLine(campaign.Name + " campaign deleted");
         }
 
+        public List<Campaign> GetAll()
+        {
+            return _campaignDal.GetAll();
+        }
+
         public void Update(Campaign campaign)
         {
             _campaignDal.Update(campaign);

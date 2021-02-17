@@ -10,6 +10,6 @@ namespace Business.Abstract
         void Add(Game game);
         void Delete(Game game);
         void Update(Game game);
-        void SellGame(Game game, Gamer gamer, Campaign campaign);
+        List<Game> GetAll();
     }
 }

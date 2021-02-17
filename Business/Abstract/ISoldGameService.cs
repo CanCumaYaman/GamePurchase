@@ -10,5 +10,6 @@ namespace Business.Abstract
         void Add(SoldGame soldGame);
         void Delete(SoldGame soldGame);
         void Update(SoldGame soldGame);
+        List<SoldGame> GetAll();
     }
 }

@@ -38,6 +38,11 @@ namespace Business.Concrete
             Console.WriteLine(gamer.Name + " " + gamer.LastName + " deleted successfully");
         }
 
+        public List<Gamer> GetAll()
+        {
+            return _gamerDal.GetAll();
+        }
+
         public void Update(Gamer gamer)
         {
             _gamerDal.Update(gamer);
