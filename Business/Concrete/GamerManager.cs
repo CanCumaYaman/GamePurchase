@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac;
+using Core.Utilities;
 using DataAccess.Abstract;
 using Entity.Concrete;
 using System;
@@ -14,39 +17,37 @@ namespace Business.Concrete
         {
             _gamerDal = gamerDal;
         }
-        public void Add(Gamer gamer)
+        [ValidationAspect(typeof(GamerValidator))]
+        public IResult Add(Gamer gamer)
         {
            var result= _gamerDal.Get(gamer);
             foreach (var item in result)
             {
                 if (item.IdentityNumber == gamer.IdentityNumber)
                 {
-                    Console.WriteLine("This user already exist in database");
-                }
-                else
-                {
-                    _gamerDal.Add(gamer);
-                    Console.WriteLine(gamer.Name + " " + gamer.LastName + " added successfully");
+                    return new ErrorResult("This gamer already exist");
                 }
             }
-            
+            _gamerDal.Add(gamer);
+            return new SuccessResult();
+
         }
 
-        public void Delete(Gamer gamer)
+        public IResult Delete(Gamer gamer)
         {
             _gamerDal.Delete(gamer);
-            Console.WriteLine(gamer.Name + " " + gamer.LastName + " deleted successfully");
+            return new SuccessResult();
         }
 
-        public List<Gamer> GetAll()
+        public IDataResult<List<Gamer>> GetAll()
         {
-            return _gamerDal.GetAll();
+            return new SuccessDataResult<List<Gamer>>(_gamerDal.GetAll());
         }
-
-        public void Update(Gamer gamer)
+        [ValidationAspect(typeof(GamerValidator))]
+        public IResult Update(Gamer gamer)
         {
             _gamerDal.Update(gamer);
-            Console.WriteLine(gamer.Name + " " + gamer.LastName + " updated successfully");
+            return new SuccessResult();
         }
     }
 }

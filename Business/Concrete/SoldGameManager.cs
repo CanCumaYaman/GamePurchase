@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac;
+using Core.Utilities;
 using DataAccess.Abstract;
 using Entity.Concrete;
 using System;
@@ -14,36 +17,36 @@ namespace Business.Concrete
         {
             _soldGameDal = soldGameDal;
         }
-        public void Add(SoldGame soldGame)
+        [ValidationAspect(typeof(SoldGameValidator))]
+        public IResult Add(SoldGame soldGame)
         {
 
             if (soldGame.CampaignEndDate < DateTime.Now)
             {
-                Console.WriteLine("This campaign has expired");
+                return new ErrorResult("This campaign has expired");
             }
             else
             {
                 _soldGameDal.Add(soldGame);
-                Console.WriteLine(soldGame.GameName + " has been sold to " + soldGame.GamerName + " " + soldGame.GamerLastName + " at " + soldGame.SoldDate);
+                return new SuccessResult(soldGame.GameName + " has been sold to " + soldGame.GamerName + " " + soldGame.GamerLastName + " at " + soldGame.SoldDate);
             }
            
         }
 
-        public void Delete(SoldGame soldGame)
+        public IResult Delete(SoldGame soldGame)
         {
             _soldGameDal.Delete(soldGame);
-            Console.WriteLine(soldGame.GameName+" sold to "+ soldGame.GamerName+" "+soldGame.GamerLastName+" has been deleted");
-        }
+            return new SuccessResult(soldGame.GameName + " sold to " + soldGame.GamerName + " " + soldGame.GamerLastName + " has been deleted");        }
 
-        public List<SoldGame> GetAll()
+        public IDataResult<List<SoldGame>> GetAll()
         {
-            return _soldGameDal.GetAll();
+            return new SuccessDataResult<List<SoldGame>>(_soldGameDal.GetAll());
         }
-
-        public void Update(SoldGame soldGame)
+        [ValidationAspect(typeof(SoldGameValidator))]
+        public IResult Update(SoldGame soldGame)
         {
             _soldGameDal.Update(soldGame);
-            Console.WriteLine(soldGame.GameName + " sold to " + soldGame.GamerName + " " + soldGame.GamerLastName + " has been updated");
+            return new SuccessResult(soldGame.GameName + " sold to " + soldGame.GamerName + " " + soldGame.GamerLastName + " has been updated");
         }
     }
 }

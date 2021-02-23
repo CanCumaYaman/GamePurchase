@@ -1,6 +1,11 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac;
+using Core.CrossCuttingConcerns.Validation.FluentValidation;
+using Core.Utilities;
 using DataAccess.Abstract;
 using Entity.Concrete;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,32 +19,37 @@ namespace Business.Concrete
         {
             _gameDal = gameDal;
         }
-        public void Add(Game game)
+        [ValidationAspect(typeof(GameValidator))]
+        public IResult Add(Game game)
         {
+           
+          
             _gameDal.Add(game);
-            Console.WriteLine(game.Name+" added successfully");
+            return new SuccessResult();
         }
 
-        public void Delete(Game game)
+        public IResult Delete(Game game)
         {
             _gameDal.Delete(game);
-            Console.WriteLine(game.Name + " deleted successfully");
+            return new SuccessResult();
         }
 
-        public List<Game> GetAll()
+        public  IDataResult<List<Game>> GetAll()
         {
-            return _gameDal.GetAll();
+            return new SuccessDataResult<List<Game>>(_gameDal.GetAll());
         }
 
-        public void SellGame(Game game, Gamer gamer, Campaign campaign)
+        public IResult SellGame(Game game, Gamer gamer, Campaign campaign)
         {
             _gameDal.SellGame(game, gamer, campaign);
+            return new SuccessResult();
         }
 
-        public void Update(Game game)
+        [ValidationAspect(typeof(GameValidator))]
+        public IResult Update(Game game)
         {
             _gameDal.Update(game);
-            Console.WriteLine(game.Name + " updated successfully");
+            return new SuccessResult();
         }
     }
 }

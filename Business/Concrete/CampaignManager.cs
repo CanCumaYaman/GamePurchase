@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac;
+using Core.Utilities;
 using DataAccess.Abstract;
 using Entity.Concrete;
 using System;
@@ -14,27 +17,29 @@ namespace Business.Concrete
         {
             _campaignDal = campaignDal;
         }
-        public void Add(Campaign campaign)
+        [ValidationAspect(typeof(CampaignValidator))]
+        public IResult Add(Campaign campaign)
         {
             _campaignDal.Add(campaign);
-            Console.WriteLine(campaign.Name+" campaign added");
+            return new SuccessResult();
         }
 
-        public void Delete(Campaign campaign)
+        public IResult Delete(Campaign campaign)
         {
             _campaignDal.Delete(campaign);
-            Console.WriteLine(campaign.Name + " campaign deleted");
+            return new SuccessResult();
         }
 
-        public List<Campaign> GetAll()
+        public IDataResult<List<Campaign>> GetAll()
         {
-            return _campaignDal.GetAll();
+            return  new SuccessDataResult<List<Campaign>>(_campaignDal.GetAll()) ;
+            
         }
-
-        public void Update(Campaign campaign)
+        [ValidationAspect(typeof(CampaignValidator))]
+        public IResult Update(Campaign campaign)
         {
             _campaignDal.Update(campaign);
-            Console.WriteLine(campaign.Name + " campaign updated");
+            return new SuccessResult();
         }
     }
 }

@@ -22,25 +22,43 @@ namespace WebAPI.Controllers
         [HttpGet("getall")]
         public IActionResult Get()
         {
-            return Ok(_campaignService.GetAll());
+            var result = _campaignService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+            
         }
         [HttpPost("add")]
         public IActionResult Add(Campaign campaign)
         {
-            _campaignService.Add(campaign);
-            return Ok();
+           var result=_campaignService.Add(campaign);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
         [HttpPost("delete")]
         public IActionResult Delete(Campaign campaign)
         {
-            _campaignService.Delete(campaign);
-            return Ok();
+            var result=_campaignService.Delete(campaign);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
-        [HttpPost("getall")]
+        [HttpPost("update")]
         public IActionResult Update(Campaign campaign)
         {
-            _campaignService.Update(campaign);
-            return Ok();
+            var result=_campaignService.Update(campaign);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
     }

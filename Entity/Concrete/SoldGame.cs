@@ -1,12 +1,14 @@
 ﻿using Core.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Entity.Concrete
 {
    public class SoldGame:IEntity
     {
+      
         public int Id { get; set; }
         public string GameName { get; set; }
         public string GamerName { get; set; }

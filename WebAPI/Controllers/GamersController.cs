@@ -22,25 +22,42 @@ namespace WebAPI.Controllers
         [HttpGet("getall")]
         public IActionResult Get()
         {
-            return Ok(_gamerService.GetAll());
+            var result = _gamerService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
         [HttpPost("add")]
         public IActionResult Add(Gamer gamer)
         {
-            _gamerService.Add(gamer);
-            return Ok();
+           var result= _gamerService.Add(gamer);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
         [HttpPost("delete")]
         public IActionResult Delete(Gamer gamer)
         {
-            _gamerService.Delete(gamer);
-            return Ok();
+           var result= _gamerService.Delete(gamer);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
-        [HttpPost("getall")]
+        [HttpPost("update")]
         public IActionResult Update(Gamer gamer)
         {
-            _gamerService.Update(gamer);
-            return Ok();
+          var result=  _gamerService.Update(gamer);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
     }

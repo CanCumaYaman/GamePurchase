@@ -30,16 +30,16 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //Business Layer
-            services.AddSingleton<IGameService, GameManager>();
-            services.AddSingleton<IGamerService, GamerManager>();
-            services.AddSingleton<ICampaignService, CampaignManager>();
-            services.AddSingleton<ISoldGameService, SoldGameManager>();
-            //Dal Layer
-            services.AddSingleton<IGameDal, EfGameDal>();
-            services.AddSingleton<IGamerDal, EfGamerDal>();
-            services.AddSingleton<ICampaignDal, EfCampaignDal>();
-            services.AddSingleton<ISoldGameDal, EfSoldGameDal>();
+            ////Business Layer
+            //services.AddSingleton<IGameService, GameManager>();
+            //services.AddSingleton<IGamerService, GamerManager>();
+            //services.AddSingleton<ICampaignService, CampaignManager>();
+            //services.AddSingleton<ISoldGameService, SoldGameManager>();
+            ////Dal Layer
+            //services.AddSingleton<IGameDal, EfGameDal>();
+            //services.AddSingleton<IGamerDal, EfGamerDal>();
+            //services.AddSingleton<ICampaignDal, EfCampaignDal>();
+            //services.AddSingleton<ISoldGameDal, EfSoldGameDal>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

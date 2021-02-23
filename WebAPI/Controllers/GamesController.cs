@@ -22,25 +22,42 @@ namespace WebAPI.Controllers
         [HttpGet("getall")]
         public IActionResult Get()
         {
-            return Ok(_gameService.GetAll());
+            var result = _gameService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
         [HttpPost("add")]
         public IActionResult Add(Game game)
         {
-            _gameService.Add(game);
-                return Ok();
+           var result= _gameService.Add(game);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
         [HttpPost("delete")]
         public IActionResult Delete(Game game)
         {
-            _gameService.Delete(game);
-            return Ok();
+           var result= _gameService.Delete(game);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
-        [HttpPost("getall")]
+        [HttpPost("update")]
         public IActionResult Update(Game game)
         {
-            _gameService.Update(game);
-            return Ok();
+           var result= _gameService.Update(game);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
     }
