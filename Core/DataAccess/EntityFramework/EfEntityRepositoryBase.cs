@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Core.DataAccess.EntityFramework
@@ -29,13 +30,14 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
-        public List<TEntity> Get(TEntity entity)
+        public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
             using (TContext context = new TContext())
             {
-                return context.Set<TEntity>().ToList();
+                return context.Set<TEntity>().SingleOrDefault(filter);
             }
         }
+
 
         public List<TEntity> GetAll()
         {

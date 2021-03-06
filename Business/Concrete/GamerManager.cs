@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac;
 using Core.Utilities;
@@ -18,16 +19,16 @@ namespace Business.Concrete
             _gamerDal = gamerDal;
         }
         [ValidationAspect(typeof(GamerValidator))]
+        [SecuredOperation("gamer.add")]
         public IResult Add(Gamer gamer)
         {
-           var result= _gamerDal.Get(gamer);
-            foreach (var item in result)
-            {
-                if (item.IdentityNumber == gamer.IdentityNumber)
+           var result= _gamerDal.Get(p=>p.IdentityNumber==gamer.IdentityNumber);
+           
+                if (result!=null)
                 {
                     return new ErrorResult("This gamer already exist");
                 }
-            }
+           
             _gamerDal.Add(gamer);
             return new SuccessResult();
 
@@ -39,6 +40,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [SecuredOperation("gamer.list")]
         public IDataResult<List<Gamer>> GetAll()
         {
             return new SuccessDataResult<List<Gamer>>(_gamerDal.GetAll());

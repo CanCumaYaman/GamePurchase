@@ -1,7 +1,9 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac;
 using Core.Utilities;
+using Core.Utilities.Business;
 using DataAccess.Abstract;
 using Entity.Concrete;
 using System;
@@ -20,17 +22,25 @@ namespace Business.Concrete
         [ValidationAspect(typeof(SoldGameValidator))]
         public IResult Add(SoldGame soldGame)
         {
-
-            if (soldGame.CampaignEndDate < DateTime.Now)
+            IResult result = BusinessRules.Run(CheckCampaignEndDate(soldGame.CampaignEndDate));
+            if (result!=null)
             {
-                return new ErrorResult("This campaign has expired");
+                return result;
             }
-            else
-            {
+            
                 _soldGameDal.Add(soldGame);
                 return new SuccessResult(soldGame.GameName + " has been sold to " + soldGame.GamerName + " " + soldGame.GamerLastName + " at " + soldGame.SoldDate);
-            }
+            
            
+        }
+
+        private IResult CheckCampaignEndDate(DateTime? campaignEndDate)
+        {
+            if (campaignEndDate < DateTime.Now)
+            {
+                return new ErrorResult(Messages.CampaignEndDateExpired);
+            }
+            return new SuccessResult();
         }
 
         public IResult Delete(SoldGame soldGame)
