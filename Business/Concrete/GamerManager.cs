@@ -2,6 +2,8 @@
 using Business.BusinessAspect.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities;
 using DataAccess.Abstract;
 using Entity.Concrete;
@@ -18,8 +20,9 @@ namespace Business.Concrete
         {
             _gamerDal = gamerDal;
         }
-        [ValidationAspect(typeof(GamerValidator))]
+       [ValidationAspect(typeof(GamerValidator))]
         [SecuredOperation("gamer.add")]
+        [CacheAspect]
         public IResult Add(Gamer gamer)
         {
            var result= _gamerDal.Get(p=>p.IdentityNumber==gamer.IdentityNumber);
@@ -40,7 +43,8 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        [SecuredOperation("gamer.list")]
+       [SecuredOperation("gamer.list")]
+        [CacheAspect]
         public IDataResult<List<Gamer>> GetAll()
         {
             return new SuccessDataResult<List<Gamer>>(_gamerDal.GetAll());

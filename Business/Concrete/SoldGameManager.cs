@@ -2,6 +2,9 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities;
 using Core.Utilities.Business;
 using DataAccess.Abstract;
@@ -57,6 +60,20 @@ namespace Business.Concrete
         {
             _soldGameDal.Update(soldGame);
             return new SuccessResult(soldGame.GameName + " sold to " + soldGame.GamerName + " " + soldGame.GamerLastName + " has been updated");
+        }
+        [TransactionScopeAspect]
+        [PerformanceAspect(5)]
+        public IResult AddTransactionalTest(SoldGame soldGame)
+        {
+
+            
+            Add(soldGame);
+            if (soldGame.CampaignEndDate < DateTime.Now)
+            {
+                throw new Exception("");
+            }
+            Add(soldGame);
+            return null;
         }
     }
 }

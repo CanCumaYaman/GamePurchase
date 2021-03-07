@@ -12,5 +12,6 @@ namespace Business.Abstract
         IResult Delete(SoldGame soldGame);
         IResult Update(SoldGame soldGame);
         IDataResult<List<SoldGame>> GetAll();
+        IResult AddTransactionalTest(SoldGame soldGame);
     }
 }
